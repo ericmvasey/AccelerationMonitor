@@ -1,0 +1,77 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.apotheosis.acceleration.monitor"
+    android:versionCode="6"
+    android:versionName="1.1.1" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-feature android:name="android.hardware.sensor.accelerometer"
+        android:required="true"/>
+    <uses-feature android:name="android.hardware.sensor.compass"
+        android:required="true" />
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="Acceleration Monitor"
+        android:theme="@style/AppTheme" >
+        
+        <activity
+            android:name=".MainMenuActivity"
+            android:screenOrientation="portrait"
+            android:label="Acceleration Monitor" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".viewer.DataViewerActivity"
+            android:label="@string/title_activity_data_viewer"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden" >
+        </activity>
+        
+        <activity
+            android:name=".picker.DataPickerActivity"
+            android:label="Choose A Data File to Load"
+            android:configChanges="orientation" >
+        </activity>
+        
+        <activity
+            android:name=".viewer.DataViewerSettingsActivity"
+            android:label="Settings" >
+        </activity>
+        
+        <activity
+            android:name=".viewer.DataInfoPageActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="Info Page" >
+        </activity>
+        
+        <activity android:name=".recorder.DataRecorderSettingsActivity"
+            android:label="Settings" >
+            
+        </activity>
+        
+        <activity android:name=".viewer.DataViewerHelpPageActivity"
+            android:label="Help" >
+            
+        </activity>
+        
+        <activity android:name=".viewer.RawDataViewerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="Data" >
+            
+        </activity>
+    </application>
+
+</manifest>

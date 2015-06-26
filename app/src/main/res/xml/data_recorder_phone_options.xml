@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <ListPreference android:id="@+id/dataCollectionRatePreference"
+        android:key="DATA_COLLECTION_RATE"
+        android:title="Data Polling Rate"
+        android:summary="Change the rate at which data is collected."
+        android:entries="@array/data_collection_rate_titles"
+        android:entryValues="@array/data_collection_rate_values"
+        android:defaultValue="1" />
+    
+</PreferenceScreen>

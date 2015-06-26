@@ -1,0 +1,10 @@
+<resources>
+
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+	<dimen name="ambilwarna_hsvHeight">240dp</dimen> 
+	<dimen name="ambilwarna_hsvWidth">240dp</dimen> 
+	<dimen name="ambilwarna_hueWidth">30dp</dimen> 
+	<dimen name="ambilwarna_spacer">8dp</dimen>
+</resources>

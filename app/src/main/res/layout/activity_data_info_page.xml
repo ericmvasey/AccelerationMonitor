@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="beforeDescendants"
+	android:focusableInTouchMode="true" >
+
+  	<RelativeLayout 
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content" >
+  		
+  		<!-- X Set -->
+  		
+  		<LinearLayout android:id="@+id/xOptionGraphSet"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:gravity="center_horizontal"
+  	        android:layout_alignParentTop="true"
+  		    android:paddingTop="10dp"  		    
+  		    android:orientation="horizontal" >
+	  		        
+ 		    <TextView
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content"
+  		        android:layout_gravity="center_horizontal"
+  		        android:text="X Acceleration"
+  		        android:textStyle="bold"
+  		        android:textSize="24sp" />        
+  		    
+  		</LinearLayout>
+
+  		
+  		<LinearLayout android:id="@+id/calculateXContainer"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:paddingTop="5dp"
+  		    android:gravity="center_horizontal"
+  		    android:orientation="horizontal"
+  		    android:layout_below="@+id/xOptionGraphSet" >
+	  			  		    
+	  		<Spinner
+		  		android:id="@+id/typeOfRegressionX"
+		  		android:layout_width="wrap_content"	          
+		  		android:layout_height="wrap_content"
+				android:spinnerMode="dropdown" />  	
+	  		    
+ 		    <TextView android:text="regression function"
+ 		        android:textSize="16sp"
+  		   		android:paddingLeft="10dp"  		        
+ 		        android:layout_width="wrap_content"
+ 		        android:layout_height="wrap_content" />  	
+  		    
+  		    <EditText android:id="@+id/xInput"
+  		        android:layout_width="105dp"		        
+  		        android:layout_gravity="center_vertical"
+  		        android:maxLines="1"
+  		        android:maxLength="1000000000"
+  		        android:scrollHorizontally="true"
+  		        android:inputType="numberDecimal"
+  		        android:imeOptions="actionDone"
+  		        android:layout_height="match_parent" />
+  		    
+  		    <TextView android:text=","
+  		        android:textSize="16sp"
+  		        android:layout_gravity="bottom"    		        
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <TextView 
+  		        android:id="@+id/xOutput"
+  		        android:text=""
+  		        android:textSize="16sp"
+  		        android:layout_gravity="center_vertical"    		        
+  		        android:paddingLeft="10dp"
+  		        android:paddingRight="10dp"
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <Button
+  		        android:id="@+id/calculateXButton"
+  		        android:layout_width="wrap_content"
+  		        android:layout_gravity="center_vertical"    		        
+  		        android:layout_height="wrap_content"
+  		        android:text="Calculate"
+  		        android:textSize="16sp" />
+  		    
+  		</LinearLayout>
+  		
+  		
+		<!-- Y Set -->
+  		<LinearLayout android:id="@+id/yOptionGraphSet"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:gravity="center_horizontal"
+  		    android:layout_below="@+id/calculateXContainer"
+  		    android:paddingTop="25dp"
+  		    android:orientation="horizontal" >
+
+	  		        
+		 		    <TextView
+		  		        android:layout_width="wrap_content"
+		  		        android:layout_height="wrap_content"
+		  		        android:layout_gravity="center_vertical"
+		  		        android:paddingLeft="10dp"
+		  		        android:text="Y Acceleration"
+		  		        android:textStyle="bold"
+		  		        android:textSize="24sp" />	        
+   
+  		</LinearLayout>
+  		
+  		<LinearLayout android:id="@+id/calculateYContainer"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:paddingTop="5dp"
+  		    android:gravity="center_horizontal"
+  		    android:orientation="horizontal"
+  		    android:layout_below="@+id/yOptionGraphSet" >
+	  		
+
+		  		    
+  		    <Spinner
+  		        android:id="@+id/typeOfRegressionY"
+  		        android:layout_width="wrap_content"          
+  		        android:layout_height="wrap_content"
+  		        android:spinnerMode="dropdown" />  		        
+
+	  		    
+  		    <TextView android:text="regression function"
+  		        android:textSize="16sp"
+	  		    android:paddingLeft="10dp"          
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />  	  		    
+  		    
+  		    
+  		    <EditText android:id="@+id/yInput"
+  		        android:layout_width="105dp"
+  		        android:layout_gravity="center_vertical"
+  		        android:maxLines="1"
+  		        android:maxLength="1000000000"
+  		        android:scrollHorizontally="true"
+  		        android:imeOptions="actionDone"  		        
+  		        android:inputType="numberDecimal"
+  		        android:layout_height="match_parent" />
+  		    
+  		    <TextView android:text=","
+  		        android:textSize="16sp"
+  		        android:layout_gravity="bottom"    		        
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <TextView 
+  		        android:id="@+id/yOutput"
+  		        android:text=""
+  		        android:textSize="16sp"
+  		        android:layout_gravity="center_vertical"    		        
+  		        android:paddingLeft="10dp"
+  		        android:paddingRight="10dp"
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <Button
+  		        android:id="@+id/calculateYButton"
+  		        android:layout_width="wrap_content"
+  		        android:layout_gravity="center_vertical"    		        
+  		        android:layout_height="wrap_content"
+  		        android:text="Calculate"
+  		        android:textSize="16sp" />
+
+  		</LinearLayout>		
+  		
+  		<!-- Z Set -->
+  		<LinearLayout android:id="@+id/zOptionGraphSet"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:gravity="center_horizontal"
+  		    android:paddingTop="25dp"
+  		    android:layout_below="@+id/calculateYContainer"
+  		    android:orientation="horizontal" >
+
+	  		        
+ 		    <TextView
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content"
+  		        android:layout_gravity="center_vertical"
+  		        android:paddingLeft="10dp"
+  		        android:text="Z Acceleration"
+  		        android:textStyle="bold"
+  		        android:textSize="24sp" />        
+  		    
+  		</LinearLayout>
+  		
+  		<LinearLayout android:id="@+id/calculateZContainer"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:paddingTop="5dp"
+  		    android:gravity="center_horizontal"
+  		    android:orientation="horizontal"
+  		    android:layout_below="@+id/zOptionGraphSet" >
+	  		
+  		    <Spinner
+  		        android:id="@+id/typeOfRegressionZ"
+  		        android:layout_width="wrap_content"	   		          
+  		        android:layout_height="wrap_content"
+  		        android:spinnerMode="dropdown" />  		        
+
+  		    <TextView android:text="regression function"
+  		        android:textSize="16sp"
+	  		    android:paddingLeft="10dp"  	        
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />    		    
+  		    
+  		    <EditText android:id="@+id/zInput"
+  		        android:layout_width="105dp"
+  		        android:layout_gravity="center_vertical"
+  		        android:maxLines="1"
+  		        android:maxLength="1000000000"
+  		        android:scrollHorizontally="true"
+  		        android:imeOptions="actionDone"  		        
+  		        android:inputType="numberDecimal"
+  		        android:layout_height="match_parent" />
+  		    
+  		    <TextView android:text=","
+  		        android:textSize="16sp"
+  		        android:layout_gravity="bottom"    		        
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <TextView 
+  		        android:id="@+id/zOutput"
+  		        android:text=""
+  		        android:textSize="16sp"
+  		        android:layout_gravity="center_vertical"    		        
+  		        android:paddingLeft="10dp"
+  		        android:paddingRight="10dp"
+  		        android:layout_width="wrap_content"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <Button
+  		        android:id="@+id/calculateZButton"
+  		        android:layout_width="wrap_content"
+  		        android:layout_gravity="center_vertical"    		        
+  		        android:layout_height="wrap_content"
+  		        android:text="Calculate"
+  		        android:textSize="16sp" />
+  		    
+  		</LinearLayout>
+  		
+  		<LinearLayout android:id="@+id/equationViews"
+  		    android:layout_width="match_parent"
+  		    android:layout_below="@+id/calculateZContainer"
+  		    android:paddingTop="25dp"
+  		    android:orientation="vertical"
+  		    android:layout_height="wrap_content" >
+  		    
+  		    <TextView android:id="@+id/xLinearEqn"
+  		        android:layout_width="match_parent"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <TextView android:id="@+id/xQuadEqn"
+  		        android:layout_width="match_parent"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <TextView android:id="@+id/yLinearEqn"
+  		        android:layout_width="match_parent"
+  		        android:layout_height="wrap_content" />  	
+  		        
+  		    <TextView android:id="@+id/yQuadEqn"
+  		        android:layout_width="match_parent"
+  		        android:layout_height="wrap_content" />  
+  		        
+  		    <TextView android:id="@+id/zLinearEqn"
+  		        android:layout_width="match_parent"
+  		        android:layout_height="wrap_content" />
+  		    
+  		    <TextView android:id="@+id/zQuadEqn"
+  		        android:layout_width="match_parent"
+  		        android:layout_height="wrap_content" />  		    		    	    	    
+  		    
+  		</LinearLayout>
+	</RelativeLayout>
+</ScrollView>

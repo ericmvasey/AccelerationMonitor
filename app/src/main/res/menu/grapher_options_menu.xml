@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:id="@+id/open_info_page"
+        android:title="@string/info_page"
+        android:showAsAction="always" />
+    
+    <item android:id="@+id/changeDomainBounds"
+        android:title="Domain Bounds"
+        android:showAsAction="always" />
+    
+    <item android:id="@+id/share_data"
+        android:title="Share"
+        android:icon="@drawable/android:ic_menu_share"
+        android:showAsAction="always" />
+        
+    <item android:id="@+id/open_options_menu"
+          android:icon="@drawable/android:ic_menu_preferences"
+          android:title="@string/settings"
+          android:showAsAction="always" />
+    
+    <item android:id="@+id/open_help_page"
+        android:title="Help"
+        android:icon="@drawable/android:ic_menu_help"
+        android:showAsAction="always" />
+</menu>

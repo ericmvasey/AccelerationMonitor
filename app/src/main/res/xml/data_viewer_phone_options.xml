@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+	<PreferenceCategory android:title = "X" > 
+	    
+	    <CheckBoxPreference android:key = "X_LINE_ENABLED"
+        	android:title = "Enable X Data Line"
+        	android:summary="Show the X Acceleration in the Graph."
+        	android:defaultValue = "true" >
+    	</CheckBoxPreference>
+    
+	    <EditTextPreference android:key = "X_LINE_KEY_TITLE"
+	    	android:title = "X Legend Title"
+	    	android:dependency="X_LINE_ENABLED"	    	
+	    	android:positiveButtonText="Ok"
+	    	android:summary="Set the X Line's legend title."
+	    	android:negativeButtonText="Cancel" >
+	    </EditTextPreference>
+	    
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="X_LINE_COLOR"
+                android:defaultValue="0xc800" 
+           	    android:dependency="X_LINE_ENABLED"
+           	    android:summary="Set the color of the X Data Line."
+                android:title="X Line Color" />
+	</PreferenceCategory>
+	
+    <PreferenceCategory android:title = "X Data Points">
+       
+     	<CheckBoxPreference android:key = "X_DATA_POINTS_ENABLED"
+      		android:title = "Enable data points on X"
+      		android:summary="Show Data Points on the X Line."
+      		android:defaultValue = "false" >
+  		</CheckBoxPreference>
+       
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="X_DATA_POINT_COLOR"
+                android:dependency = "X_DATA_POINTS_ENABLED"
+                android:summary="Set the color of the X Data Points."
+                android:defaultValue="0xc800" 
+                android:title="X Data Point Color" />
+       
+   </PreferenceCategory>
+	
+	<PreferenceCategory android:title = "Y" > 
+	    
+	    <CheckBoxPreference android:key = "Y_LINE_ENABLED"
+        	android:title = "Enable Y data line"
+        	android:summary="Show the Y Acceleration in the Graph."
+        	android:defaultValue = "true" >
+    	</CheckBoxPreference>
+    
+	    <EditTextPreference android:key = "Y_LINE_KEY_TITLE"
+	    	android:title = "Y Legend Title"
+	    	android:dependency="Y_LINE_ENABLED"
+	    	android:summary="Set the Y Line's legend title."
+	    	android:positiveButtonText="Ok"
+	    	android:negativeButtonText="Cancel" >
+	    </EditTextPreference>
+	    
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="Y_LINE_COLOR"
+                android:defaultValue="0xc80000" 
+                android:summary="Set the color of the Y Data Line."
+                android:title="Y Line Color"
+               	android:dependency="Y_LINE_ENABLED" />
+	</PreferenceCategory>
+	
+   <PreferenceCategory android:title = "Y Data Points" >
+      
+    	<CheckBoxPreference android:key = "Y_DATA_POINTS_ENABLED"
+     		android:title = "Enable data points on Y"
+     		android:summary="Show Data Points on the Y Line."
+     		android:defaultValue = "false" >
+ 		</CheckBoxPreference>
+      
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="Y_DATA_POINT_COLOR"
+           		android:dependency = "Y_DATA_POINTS_ENABLED"
+           		android:summary="Set the color of the Y Data Points."
+                android:defaultValue="0xc80000" 
+                android:title="Y Data Point Color" />
+        
+    </PreferenceCategory>
+	
+	<PreferenceCategory android:title = "Z" > 
+	    
+	    <CheckBoxPreference android:key = "Z_LINE_ENABLED"
+        	android:title = "Enable Z data line"
+        	android:summary="Show the Z Acceleration in the Graph."
+        	android:defaultValue = "true" >
+    	</CheckBoxPreference>
+    
+	    <EditTextPreference android:key = "Z_LINE_KEY_TITLE"
+	    	android:title = "Z Legend Title"
+	        android:summary="Set the Z Line's legend title."
+	    	android:positiveButtonText="Ok"
+	    	android:dependency="Z_LINE_ENABLED"
+	    	android:negativeButtonText="Cancel" >
+	    </EditTextPreference>
+	    
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="Z_LINE_COLOR"
+                android:defaultValue="0xc8" 
+                android:dependency="Z_LINE_ENABLED"
+                android:summary="Set the color of the Z Data Line."
+                android:title="Z Line Color" />
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title = "Z Data Points">
+	        
+     	<CheckBoxPreference android:key = "Z_DATA_POINTS_ENABLED"
+      		android:title = "Enable data points on Z"
+     		android:summary="Show Data Points on the Z Line."      		
+      		android:defaultValue = "false" >
+  		</CheckBoxPreference>
+       
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="Z_DATA_POINT_COLOR"
+                android:defaultValue="0xc8" 
+                android:summary="Set the color of the Z Data Points."
+           		android:dependency = "Z_DATA_POINTS_ENABLED"
+                android:title="Z Data Point Color" />
+	        
+	 </PreferenceCategory>
+	
+	<PreferenceCategory android:title = "X-Axis">
+	    <EditTextPreference android:key = "X_AXIS_TITLE"
+	        android:title="X-Axis Title"
+	        android:summary="Set the X Axis Title."
+	        android:positiveButtonText="Ok"
+	        android:negativeButtonText="Cancel"/>
+
+	    <com.apotheosis.acceleration.monitor.view.XStepPreference
+			android:key = "X_AXIS_STEP_VALUE"
+	        android:title="X-Axis Step Value"
+	        android:positiveButtonText="Ok"
+	        android:summary="Set the interval that ticks occur on the X Axis."
+	        android:defaultValue="-1"
+	        android:inputType="numberDecimal"	        
+	        android:negativeButtonText="Cancel"/>	    
+	    
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title = "Y-Axis">
+	    <EditTextPreference android:key = "Y_AXIS_TITLE"
+	        android:title="Y-Axis Title"
+	        android:summary="Set the Y Axis Title."	        
+	        android:positiveButtonText="Ok"
+	        android:negativeButtonText="Cancel"/>  
+	    
+	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="Global Graph Options">	    
+	    <com.apotheosis.acceleration.monitor.color_chooser.AmbilWarnaPreference
+                android:key="GRAPH_BACKGROUND_COLOR"
+                android:title="Graph Background Color"
+                android:summary="Set the background color of the Graph."
+                android:defaultValue="0x000000"
+                 />
+	    
+	</PreferenceCategory>
+</PreferenceScreen>

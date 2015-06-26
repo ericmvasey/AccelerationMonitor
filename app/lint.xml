@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <issue id="HardcodedText">
+        <ignore path="res\layout\activity_data_info_page.xml" />
+        <ignore path="res\layout\activity_raw_data_page.xml" />
+        <ignore path="res\layout\alertdialog_initalvals.xml" />
+    </issue>
+    <issue id="InvalidPackage" severity="ignore" />
+    <issue id="NewApi" severity="ignore" />
+</lint>
