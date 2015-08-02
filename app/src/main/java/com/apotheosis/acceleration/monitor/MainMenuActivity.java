@@ -3,14 +3,12 @@ package com.apotheosis.acceleration.monitor;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -28,11 +26,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.apotheosis.acceleration.monitor.adapter.FileListAdapter;
+import com.apotheosis.acceleration.monitor.recorder.DataCollector;
+import com.apotheosis.acceleration.monitor.recorder.DataRecorderFragment;
 import com.apotheosis.acceleration.util.FileUtilities;
 import com.apotheosis.acceleration.util.LoadData;
 import com.apotheosis.acceleration.util.TimeXYZDataPackage;
-import com.apotheosis.acceleration.monitor.recorder.DataCollector;
-import com.apotheosis.acceleration.monitor.recorder.DataRecorderFragment;
 
 import java.io.File;
 import java.util.List;
@@ -64,20 +62,12 @@ public class MainMenuActivity extends AppCompatActivity
 			defaultPrefs.edit().putBoolean("LICENSES_ACCEPTED", false).apply();
 		}
 
-		if(defaultPrefs.getBoolean("LICENSES_ACCEPTED", false))
-		{
-			PreferenceManager.setDefaultValues(this, R.xml.data_viewer_phone_options, false);
+		setUpListView();
 
-			setUpListView();
+		getSupportFragmentManager().beginTransaction()
+				.replace(R.id.recordViewContainer, new DataRecorderFragment())
+				.commit();
 
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.recordViewContainer, new DataRecorderFragment())
-					.commit();
-		}
-		else
-		{
-			licenseDialog();
-		}
 		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
 		toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.saved_sets_title, R.string.app_name)
 		{
@@ -85,21 +75,28 @@ public class MainMenuActivity extends AppCompatActivity
 			@Override
 			public void onDrawerClosed(View v)
 			{
-				getSupportActionBar().setTitle(oldTitle);
+				if(getSupportActionBar() != null)
+					getSupportActionBar().setTitle(oldTitle);
 			}
 
 			@Override
 			public void onDrawerOpened(View v)
 			{
-				oldTitle = getSupportActionBar().getTitle().toString();
+				if(getSupportActionBar() != null && getSupportActionBar().getTitle() != null)
+					oldTitle = getSupportActionBar().getTitle().toString();
+
 				getSupportActionBar().setTitle(getResources().getString(R.string.saved_sets_title));
 			}
 		};
 
 		drawerLayout.setDrawerListener(toggle);
-		getSupportActionBar().setElevation(0);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
+
+		if(getSupportActionBar() != null)
+		{
+			getSupportActionBar().setElevation(0);
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setHomeButtonEnabled(true);
+		}
     }
 
 	@Override
@@ -153,7 +150,9 @@ public class MainMenuActivity extends AppCompatActivity
 		collector.setFileName(name);
 		collector.start();
 		pauseAccel.setText("Finish");
-		getSupportActionBar().setTitle("Data Collection In Progress");
+
+		if(getSupportActionBar() != null)
+			getSupportActionBar().setTitle("Data Collection In Progress");
 
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		NotificationCompat.Builder notification = new NotificationCompat.Builder(MainMenuActivity.this);
@@ -175,10 +174,15 @@ public class MainMenuActivity extends AppCompatActivity
 
 	private void stopCollection()
 	{
-		collector.stop();
-		collector = null;
-		pauseAccel.setText("Start");
-		getSupportActionBar().setTitle("Data Collection Not Running");
+		if(collector != null)
+		{
+			collector.stop();
+			collector = null;
+			pauseAccel.setText("Start");
+
+			if(getSupportActionBar() != null)
+				getSupportActionBar().setTitle("Data Collection Not Running");
+		}
 
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		nm.cancel(R.string.app_name);
@@ -187,16 +191,15 @@ public class MainMenuActivity extends AppCompatActivity
 		((FileListAdapter) lv.getAdapter()).refreshFiles();
 	}
 
-	@Override
-	public void onResume()
+	private void initRecorderFragment()
 	{
-		super.onResume();
-
-		if(collector == null || !collector.isRunning())
-			getSupportActionBar().setTitle("Data Collection Not Running");
-		else
-			getSupportActionBar().setTitle("Data Collection In Progress");
-
+		if(getSupportActionBar() != null)
+		{
+			if (collector == null || !collector.isRunning())
+				getSupportActionBar().setTitle("Data Collection Not Running");
+			else
+				getSupportActionBar().setTitle("Data Collection In Progress");
+		}
 
 		pauseAccel = (Button) findViewById(R.id.pauseSensor);
 		pauseAccel.setOnClickListener(new View.OnClickListener()
@@ -229,8 +232,7 @@ public class MainMenuActivity extends AppCompatActivity
 						}
 					});
 					filename.show();
-				}
-				else
+				} else
 				{
 					stopCollection();
 				}
@@ -238,53 +240,53 @@ public class MainMenuActivity extends AppCompatActivity
 		});
 	}
 
-	private void licenseDialog()
+	@Override
+	public void onResume()
 	{
+		super.onResume();
+		initRecorderFragment();
 		final SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		final AlertDialog.Builder acceptLicenses = new AlertDialog.Builder(this);
-		View v = getLayoutInflater().inflate(R.layout.alertdialog_license_prompt, null);
-		acceptLicenses.setView(v);
-
-		WebView cpol = (WebView) v.findViewById(R.id.CPOL_view),
-				apache = (WebView) v.findViewById(R.id.APACHE_2_0_view);
-		cpol.loadUrl("file:///android_res/raw/cpol.html");
-		cpol.getSettings().setLoadWithOverviewMode(true);
-		cpol.getSettings().setBuiltInZoomControls(true);
-		cpol.getSettings().setUseWideViewPort(true);
-		apache.loadUrl("file:///android_res/raw/apache.html");
-		apache.getSettings().setLoadWithOverviewMode(true);
-		apache.getSettings().setBuiltInZoomControls(true);
-		apache.getSettings().setUseWideViewPort(true);
-
-		acceptLicenses.setPositiveButton("Accept", new DialogInterface.OnClickListener()
+		if (!defaultPrefs.getBoolean("LICENSES_ACCEPTED", false))
 		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
+			final AlertDialog.Builder acceptLicenses = new AlertDialog.Builder(this);
+			View v = getLayoutInflater().inflate(R.layout.alertdialog_license_prompt, null);
+			acceptLicenses.setView(v);
+
+			WebView cpol = (WebView) v.findViewById(R.id.CPOL_view),
+					apache = (WebView) v.findViewById(R.id.APACHE_2_0_view);
+			cpol.loadUrl("file:///android_res/raw/cpol.html");
+			cpol.getSettings().setLoadWithOverviewMode(true);
+			cpol.getSettings().setBuiltInZoomControls(true);
+			cpol.getSettings().setUseWideViewPort(true);
+			apache.loadUrl("file:///android_res/raw/apache.html");
+			apache.getSettings().setLoadWithOverviewMode(true);
+			apache.getSettings().setBuiltInZoomControls(true);
+			apache.getSettings().setUseWideViewPort(true);
+
+			acceptLicenses.setPositiveButton("Accept", new DialogInterface.OnClickListener()
 			{
-				defaultPrefs.edit().putBoolean("LICENSES_ACCEPTED", true).apply();
-				dialog.dismiss();
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					defaultPrefs.edit().putBoolean("LICENSES_ACCEPTED", true).apply();
+					dialog.dismiss();
 
-				PreferenceManager.setDefaultValues(MainMenuActivity.this, R.xml.data_viewer_phone_options, false);
+					PreferenceManager.setDefaultValues(MainMenuActivity.this, R.xml.data_viewer_phone_options, false);
+				}
+			});
 
-				setUpListView();
-
-				getSupportFragmentManager().beginTransaction()
-						.replace(R.id.recordViewContainer, new DataRecorderFragment())
-						.commit();
-			}
-		});
-
-		acceptLicenses.setNegativeButton("Decline", new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
+			acceptLicenses.setNegativeButton("Decline", new DialogInterface.OnClickListener()
 			{
-				finish();
-			}
-		});
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					finish();
+				}
+			});
 
-		acceptLicenses.setCancelable(false);
-		acceptLicenses.show();
+			acceptLicenses.setCancelable(false);
+			acceptLicenses.show();
+		}
 	}
 
 	private void setUpListView()

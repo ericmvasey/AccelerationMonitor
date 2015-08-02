@@ -171,12 +171,6 @@ public class DataViewerSettingsActivity extends PreferenceActivity
 				getString(OPTION_Y_AXIS_TITLE, OPTION_Y_AXIS_TITLE_DEFAULT);
 	}
 	
-	public static int getGraphBackgroundColor(Context context)
-	{
-		return PreferenceManager.getDefaultSharedPreferences(context).
-				getInt(OPTION_GRAPH_BACKGROUND_COLOR, OPTION_GRAPH_BACKGROUND_COLOR_DEFAULT);
-	}
-	
 	public static int getXDataPointColor(Context context)
 	{
 		return PreferenceManager.getDefaultSharedPreferences(context).
