@@ -1,76 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.apotheosis.acceleration.monitor"
-    android:versionCode="6"
-    android:versionName="1.1.1" >
+    android:versionCode="7"
+    android:versionName="2.0.0" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Google Analytics required permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-feature android:name="android.hardware.sensor.accelerometer"
-        android:required="true"/>
-    <uses-feature android:name="android.hardware.sensor.compass"
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
         android:required="true" />
-
-    <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="18" />
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="Acceleration Monitor"
-        android:theme="@style/AppTheme" >
-        
+        android:theme="@style/AppTheme"
+        android:name="com.apotheosis.acceleration.AccelerationMonitorApp">
+
+        <!-- Add the following meta-data for devices running Google Play service. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.gms.analytics.globalConfigResource"
+            android:resource="@xml/global_tracker" />
+
+        <!--
+        Optionally, register AnalyticsReceiver and AnalyticsService to support background
+        dispatching on non-Google Play devices
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity
             android:name=".MainMenuActivity"
-            android:screenOrientation="portrait"
-            android:label="Acceleration Monitor" >
+            android:label="Acceleration Monitor"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".viewer.DataViewerActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_data_viewer"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden" >
+            android:screenOrientation="landscape" >
         </activity>
-        
-        <activity
-            android:name=".picker.DataPickerActivity"
-            android:label="Choose A Data File to Load"
-            android:configChanges="orientation" >
-        </activity>
-        
         <activity
             android:name=".viewer.DataViewerSettingsActivity"
             android:label="Settings" >
         </activity>
-        
         <activity
             android:name=".viewer.DataInfoPageActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="Info Page" >
         </activity>
-        
-        <activity android:name=".recorder.DataRecorderSettingsActivity"
+        <activity
+            android:name=".recorder.DataRecorderSettingsActivity"
             android:label="Settings" >
-            
         </activity>
-        
-        <activity android:name=".viewer.DataViewerHelpPageActivity"
+        <activity
+            android:name=".viewer.DataViewerHelpPageActivity"
             android:label="Help" >
-            
         </activity>
-        
-        <activity android:name=".viewer.RawDataViewerActivity"
+        <activity
+            android:name=".viewer.RawDataViewerActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="Data" >
-            
         </activity>
     </application>
 

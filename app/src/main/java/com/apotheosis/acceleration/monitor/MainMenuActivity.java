@@ -31,6 +31,8 @@ import com.apotheosis.acceleration.monitor.recorder.DataRecorderFragment;
 import com.apotheosis.acceleration.util.FileUtilities;
 import com.apotheosis.acceleration.util.LoadData;
 import com.apotheosis.acceleration.util.TimeXYZDataPackage;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
 import java.util.List;
@@ -339,7 +341,7 @@ public class MainMenuActivity extends AppCompatActivity
 									boolean isDrawerOpen = drawerLayout.isDrawerOpen(findViewById(R.id.side_drawer));
 
 									Intent i;
-
+                                    Tracker tracker;
 									switch (which)
 									{
 										case 0:
@@ -361,12 +363,19 @@ public class MainMenuActivity extends AppCompatActivity
 											new LoadData(TimeXYZDataPackage.DataType.RAW_DATA,
 													MainMenuActivity.this,
 													fileName).execute((Void[]) null);
+
 											break;
 
 										case 2:
 
 											if(isDrawerOpen)
 												drawerLayout.closeDrawers();
+
+                                            tracker = AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
+                                            tracker.send(new HitBuilders.EventBuilder()
+                                                    .setCategory("Data Function")
+                                                    .setAction("Share Data")
+                                                    .build());
 
 											i = new Intent(Intent.ACTION_SEND);
 											i.setType("text/xml");

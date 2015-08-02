@@ -2,11 +2,25 @@
 <items version="2" >
 
     <item
+        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\classes-2fc1072d49534b78f75e6283cc2c097728c409b7.jar" />
+    </item>
+    <item
         jar="C:\Users\EricMVasey\.gradle\caches\modules-2\files-2.1\com.androidplot\androidplot-core\0.6.1\3db0daea52375b26bfa61c59b8df93950bdefbbc\androidplot-core-0.6.1.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="3db0daea52375b26bfa61c59b8df93950bdefbbc">
         <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\androidplot-core-0.6.1-8e6ab9189ce5b8977c7d7f848a0730aa8a5f3174.jar" />
+    </item>
+    <item
+        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-1ab65ad85acb0481cab5b1f7d778cedf3aa386e6.jar" />
     </item>
     <item
         jar="C:\Users\EricMVasey\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-math3\3.5\13af68e9a11576953f5c4b09436f8207be9d3a27\commons-math3-3.5.jar"
@@ -16,32 +30,32 @@
         <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\commons-math3-3.5-43f4cf6ed6ac274121c6fc5e3172b864912f2d61.jar" />
     </item>
     <item
-        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\libs\internal_impl-22.1.1.jar"
+        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
-        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\internal_impl-22.1.1-29c41581208b82ad93ea0ca4654fca50a2e99e5c.jar" />
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\classes-cdc312571eea2c30a9fcc32826930dddcaefe42f.jar" />
     </item>
     <item
-        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.1.1\jars\classes.jar"
+        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
-        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\classes-d8c4de200c24ce4615caf2bf6c3504112fbd854e.jar" />
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-db1bb2a3f1608a31c38a2d1f5698fe71cc45038a.jar" />
     </item>
     <item
-        jar="D:\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.1.1\support-annotations-22.1.1.jar"
+        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
-        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\support-annotations-22.1.1-2ef664910a9b1d11909711714c2671029fd040ed.jar" />
+        sha1="a78183f30e769a98ab4820794f597763088d3065">
+        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\classes-5339cae09bf75c309c49ba85d859c7d989efb774.jar" />
     </item>
     <item
-        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.1.1\jars\classes.jar"
+        jar="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\7.5.0\jars\classes.jar"
         jumboMode="false"
         revision="21.1.2"
-        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
-        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\classes-e5aa4f26d101e5dcf01edcda4314a6390ea6a1f7.jar" />
+        sha1="e7b35244f50663b3f8d150714bca9ecd7a290da1">
+        <dex dex="C:\Users\EricMVasey\AndroidStudioProjects\AccelerationMonitor\app\build\intermediates\pre-dexed\debug\classes-848a2877cdd210ea7e16232c2a4a0b6146b145d3.jar" />
     </item>
 
 </items>
