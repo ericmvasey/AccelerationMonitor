@@ -1,5 +1,6 @@
 package com.apotheosis.acceleration.monitor;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,11 +8,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,10 +38,9 @@ import com.apotheosis.acceleration.monitor.recorder.DataRecorderFragment;
 import com.apotheosis.acceleration.util.FileUtilities;
 import com.apotheosis.acceleration.util.LoadData;
 import com.apotheosis.acceleration.util.TimeXYZDataPackage;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity
@@ -52,12 +58,44 @@ public class MainMenuActivity extends AppCompatActivity
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
+		boolean permissionCheck = (ContextCompat.checkSelfPermission(this,
+				Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED);
+
+		if(!permissionCheck)
+		{
+			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+					123);
+		}
+		else
+		{
+			init();
+		}
+    }
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+	{
+		switch(requestCode)
+		{
+			case 123:
+				if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+				{
+					init();
+				}
+				else
+					finish();
+		}
+	}
+
+	private Fragment currentFragment;
+	private void init()
+	{
 		File dir = new File(FileUtilities.path);
 
 		if(!dir.isDirectory())
 			dir.mkdir();
 
-		SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+		final SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		if(!defaultPrefs.contains("LICENSES_ACCEPTED"))
 		{
@@ -66,8 +104,10 @@ public class MainMenuActivity extends AppCompatActivity
 
 		setUpListView();
 
+		currentFragment = new DataRecorderFragment();
+
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.recordViewContainer, new DataRecorderFragment())
+				.replace(R.id.recordViewContainer, currentFragment)
 				.commit();
 
 		DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.mainDrawerLayout);
@@ -99,7 +139,52 @@ public class MainMenuActivity extends AppCompatActivity
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 			getSupportActionBar().setHomeButtonEnabled(true);
 		}
-    }
+
+		toggle.syncState();
+
+		initRecorderFragment();
+		if (!defaultPrefs.getBoolean("LICENSES_ACCEPTED", false))
+		{
+			final AlertDialog.Builder acceptLicenses = new AlertDialog.Builder(this);
+			View v = getLayoutInflater().inflate(R.layout.alertdialog_license_prompt, null);
+			acceptLicenses.setView(v);
+
+			WebView cpol = (WebView) v.findViewById(R.id.CPOL_view),
+					apache = (WebView) v.findViewById(R.id.APACHE_2_0_view);
+			cpol.loadUrl("file:///android_res/raw/cpol.html");
+			cpol.getSettings().setLoadWithOverviewMode(true);
+			cpol.getSettings().setBuiltInZoomControls(true);
+			cpol.getSettings().setUseWideViewPort(true);
+			apache.loadUrl("file:///android_res/raw/apache.html");
+			apache.getSettings().setLoadWithOverviewMode(true);
+			apache.getSettings().setBuiltInZoomControls(true);
+			apache.getSettings().setUseWideViewPort(true);
+
+			acceptLicenses.setPositiveButton("Accept", new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					defaultPrefs.edit().putBoolean("LICENSES_ACCEPTED", true).apply();
+					dialog.dismiss();
+
+					PreferenceManager.setDefaultValues(MainMenuActivity.this, R.xml.data_viewer_phone_options, false);
+				}
+			});
+
+			acceptLicenses.setNegativeButton("Decline", new DialogInterface.OnClickListener()
+			{
+				@Override
+				public void onClick(DialogInterface dialog, int which)
+				{
+					finish();
+				}
+			});
+
+			acceptLicenses.setCancelable(false);
+			acceptLicenses.show();
+		}
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
@@ -108,15 +193,6 @@ public class MainMenuActivity extends AppCompatActivity
 			return true;
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState)
-	{
-		super.onPostCreate(savedInstanceState);
-
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		toggle.syncState();
 	}
 
 	@Override
@@ -203,11 +279,10 @@ public class MainMenuActivity extends AppCompatActivity
 				getSupportActionBar().setTitle("Data Collection In Progress");
 		}
 
-		pauseAccel = (Button) findViewById(R.id.pauseSensor);
-		pauseAccel.setOnClickListener(new View.OnClickListener()
+		((DataRecorderFragment) currentFragment).setOnCollectionToggleListener(new DataRecorderFragment.OnCollectionToggle()
 		{
 			@Override
-			public void onClick(View v)
+			public void onToggle()
 			{
 				if (collector == null)
 					collector = new DataCollector(MainMenuActivity.this);
@@ -246,49 +321,7 @@ public class MainMenuActivity extends AppCompatActivity
 	public void onResume()
 	{
 		super.onResume();
-		initRecorderFragment();
-		final SharedPreferences defaultPrefs = PreferenceManager.getDefaultSharedPreferences(this);
-		if (!defaultPrefs.getBoolean("LICENSES_ACCEPTED", false))
-		{
-			final AlertDialog.Builder acceptLicenses = new AlertDialog.Builder(this);
-			View v = getLayoutInflater().inflate(R.layout.alertdialog_license_prompt, null);
-			acceptLicenses.setView(v);
 
-			WebView cpol = (WebView) v.findViewById(R.id.CPOL_view),
-					apache = (WebView) v.findViewById(R.id.APACHE_2_0_view);
-			cpol.loadUrl("file:///android_res/raw/cpol.html");
-			cpol.getSettings().setLoadWithOverviewMode(true);
-			cpol.getSettings().setBuiltInZoomControls(true);
-			cpol.getSettings().setUseWideViewPort(true);
-			apache.loadUrl("file:///android_res/raw/apache.html");
-			apache.getSettings().setLoadWithOverviewMode(true);
-			apache.getSettings().setBuiltInZoomControls(true);
-			apache.getSettings().setUseWideViewPort(true);
-
-			acceptLicenses.setPositiveButton("Accept", new DialogInterface.OnClickListener()
-			{
-				@Override
-				public void onClick(DialogInterface dialog, int which)
-				{
-					defaultPrefs.edit().putBoolean("LICENSES_ACCEPTED", true).apply();
-					dialog.dismiss();
-
-					PreferenceManager.setDefaultValues(MainMenuActivity.this, R.xml.data_viewer_phone_options, false);
-				}
-			});
-
-			acceptLicenses.setNegativeButton("Decline", new DialogInterface.OnClickListener()
-			{
-				@Override
-				public void onClick(DialogInterface dialog, int which)
-				{
-					finish();
-				}
-			});
-
-			acceptLicenses.setCancelable(false);
-			acceptLicenses.show();
-		}
 	}
 
 	private void setUpListView()
@@ -341,7 +374,6 @@ public class MainMenuActivity extends AppCompatActivity
 									boolean isDrawerOpen = drawerLayout.isDrawerOpen(findViewById(R.id.side_drawer));
 
 									Intent i;
-                                    Tracker tracker;
 									switch (which)
 									{
 										case 0:
@@ -371,11 +403,14 @@ public class MainMenuActivity extends AppCompatActivity
 											if(isDrawerOpen)
 												drawerLayout.closeDrawers();
 
-                                            tracker = AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
-                                            tracker.send(new HitBuilders.EventBuilder()
-                                                    .setCategory("Data Function")
-                                                    .setAction("Share Data")
-                                                    .build());
+											if(Build.VERSION.SDK_INT>=24){
+												try{
+													Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+													m.invoke(null);
+												}catch(Exception e){
+													e.printStackTrace();
+												}
+											}
 
 											i = new Intent(Intent.ACTION_SEND);
 											i.setType("text/xml");

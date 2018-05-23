@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.androidplot.Plot;
-import com.androidplot.ui.SizeMetric;
-import com.androidplot.ui.SizeMetrics;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -37,7 +35,7 @@ public class DataCollector implements SensorEventListener
     private int dataCollectionRate;
     private boolean run;
     private FileUtilities fu;
-    private final int HISTORY_SIZE = 20;
+    private final int HISTORY_SIZE = 100;
     private boolean pause = false;
 
     private SimpleXYSeries xAccel, yAccel, zAccel;
@@ -76,11 +74,13 @@ public class DataCollector implements SensorEventListener
         plot.addSeries(xAccel, new LineAndPointFormatter(Color.GREEN, Color.TRANSPARENT, Color.TRANSPARENT, null) );
         plot.addSeries(yAccel, new LineAndPointFormatter(Color.RED, Color.TRANSPARENT, Color.TRANSPARENT, null));
         plot.addSeries(zAccel, new LineAndPointFormatter(Color.BLUE, Color.TRANSPARENT, Color.TRANSPARENT, null));
+        plot.getLegend().setVisible(false);
+        plot.setRangeBoundaries(-9.8*2, 9.8*2, BoundaryMode.FIXED);
         plot.setDomainLabel("Time (sec)");
         plot.setRangeLabel("Acceleration (m/s^2)");
-        plot.getTitleWidget().setVisible(false);
-        plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.BLACK);
-        plot.getGraphWidget().getBackgroundPaint().setColor(Color.BLACK);
+        plot.getTitle().setVisible(false);
+        plot.getGraph().getGridBackgroundPaint().setColor(Color.BLACK);
+        plot.getGraph().getBackgroundPaint().setColor(Color.BLACK);
 
         plot.setPlotPadding(0, 0, 0, 0);
         plot.setPlotMargins(0, 0, 0, 0);

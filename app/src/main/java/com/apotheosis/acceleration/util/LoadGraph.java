@@ -11,8 +11,8 @@ import com.androidplot.Plot.BorderStyle;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.SimpleXYSeries.ArrayFormat;
+import com.androidplot.xy.StepMode;
 import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYStepMode;
 import com.apotheosis.acceleration.monitor.viewer.DataViewerSettingsActivity;
 
 public class LoadGraph extends AsyncTask<Void, Void, Void>
@@ -50,8 +50,8 @@ public class LoadGraph extends AsyncTask<Void, Void, Void>
 		DataViewerSettingsActivity.setOPTION_Z_LINE_KEY_TITLE_DEFAULT("Z Acceleration");
 
 		plot.clear();
-		plot.getGraphWidget().getGridBackgroundPaint().setColor(Color.BLACK);
-		plot.getGraphWidget().getBackgroundPaint().setColor(Color.BLACK);
+		plot.getGraph().getGridBackgroundPaint().setColor(Color.BLACK);
+		plot.getGraph().getBackgroundPaint().setColor(Color.BLACK);
 
 		plot.setRangeLabel(DataViewerSettingsActivity.getYAxisTitle(c));
 		plot.setDomainLabel(DataViewerSettingsActivity.getXAxisTitle(c));
@@ -157,8 +157,8 @@ public class LoadGraph extends AsyncTask<Void, Void, Void>
 		}
 
 		//Plot layout configurations
-		plot.getGraphWidget().setTicksPerRangeLabel(1);
-		plot.getGraphWidget().setTicksPerDomainLabel(1);
+		plot.getGraph().setLinesPerDomainLabel(1);
+		plot.getGraph().setLinesPerRangeLabel(1);
 
 		double stepVal = DataViewerSettingsActivity.getXAxisStepValue(c);
 		Log.d("STEPVAL", String.valueOf(stepVal));
@@ -170,8 +170,8 @@ public class LoadGraph extends AsyncTask<Void, Void, Void>
 			stepVal = (lastTimeVal/10.0);
 		}
 
-		plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, stepVal);
-		plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, 1);
+		plot.setDomainStep(StepMode.INCREMENT_BY_VAL, stepVal);
+		plot.setRangeStep(StepMode.INCREMENT_BY_VAL, 1);
 		plot.setBorderStyle(BorderStyle.SQUARE, null, null);
 		plot.setPlotPadding(0,0,0,0);
 		plot.setPlotMargins(0,0,0,0);

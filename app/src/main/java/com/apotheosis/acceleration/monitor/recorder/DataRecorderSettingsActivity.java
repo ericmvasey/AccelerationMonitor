@@ -10,7 +10,7 @@ import com.apotheosis.acceleration.monitor.R;
 public class DataRecorderSettingsActivity extends PreferenceActivity
 {
 	private static final String OPTION_DATA_COLLECTION_RATE = "DATA_COLLECTION_RATE";
-	private static final String OPTION_DATA_COLLECTION_RATE_DEFAULT = "1";
+	private static final String OPTION_DATA_COLLECTION_RATE_DEFAULT = "2";
 	
 	@SuppressWarnings("deprecation")
 	@Override

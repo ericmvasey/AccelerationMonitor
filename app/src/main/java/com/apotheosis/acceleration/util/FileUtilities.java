@@ -19,7 +19,7 @@ public class FileUtilities
 {
 	public static String fileName;
 	public static boolean dataCollectionRunning = false;
-	public static final String path = Environment.getExternalStorageDirectory().toString() + "/accelerometer_data/";
+	public static final String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/accelerometer_data/";
 
 	private BufferedWriter bw;
 

@@ -8,14 +8,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.androidplot.xy.XYPlotZoomPan;
-import com.apotheosis.acceleration.monitor.AnalyticsTrackers;
+import com.androidplot.xy.XYPlot;
 import com.apotheosis.acceleration.monitor.R;
 import com.apotheosis.acceleration.util.FileUtilities;
 import com.apotheosis.acceleration.util.LoadGraph;
 import com.apotheosis.acceleration.util.TimeXYZDataPackage;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import java.io.File;
 
@@ -44,12 +41,12 @@ public class DataViewerActivity extends AppCompatActivity
 				getLastCustomNonConfigurationInstance() == null)
 		{
 			dp = getIntent().getExtras().getParcelable("DATA");
-			loadGraph = new LoadGraph(dp, this, (XYPlotZoomPan) findViewById(R.id.plot));
+			loadGraph = new LoadGraph(dp, this, (XYPlot) findViewById(R.id.plot));
 			loadGraph.execute( (Void[]) null);
 			setTitle(dp.getTitle());
 		}
 
-		XYPlotZoomPan plot = (XYPlotZoomPan) findViewById(R.id.plot);
+		XYPlot plot = (XYPlot) findViewById(R.id.plot);
 		plot.setOnLongClickListener(new View.OnLongClickListener()
 		{
 			@Override
@@ -73,12 +70,6 @@ public class DataViewerActivity extends AppCompatActivity
 						}
 						else if (which == 1)
 						{
-                            Tracker tracker = AnalyticsTrackers.getInstance().get(AnalyticsTrackers.Target.APP);
-                            tracker.send(new HitBuilders.EventBuilder()
-                                .setCategory("Data Function")
-                                .setAction("Share Data")
-                                .build());
-
 							i = new Intent(Intent.ACTION_SEND);
 							i.setType("text/xml");
 							i.putExtra(Intent.EXTRA_SUBJECT, "Sending " +
@@ -100,8 +91,6 @@ public class DataViewerActivity extends AppCompatActivity
 				return true;
 			}
 		});
-
-		plot.setZoomEnabled(false);
 	}
 
 	@Override

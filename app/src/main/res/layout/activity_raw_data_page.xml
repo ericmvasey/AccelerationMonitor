@@ -7,7 +7,6 @@
 
    	<ScrollView android:layout_width="match_parent"
    	    android:layout_height="wrap_content"
-   	    android:layout_below="@+id/rawDataPageAds"
    	    android:id="@+id/dataSetScrollContainer"
    	    android:layout_centerHorizontal="true" >
    	    
@@ -16,5 +15,4 @@
    	    	android:layout_height="wrap_content"/>
    	
    	</ScrollView>
-   
 </RelativeLayout>
