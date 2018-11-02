@@ -17,6 +17,7 @@ public class DataRecorderFragment extends Fragment
     }
 
     private OnCollectionToggle onCollectionToggleListener;
+    private Button loggingButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,8 +26,8 @@ public class DataRecorderFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_data_recorder,
                 container, false);
 
-        Button pauseAccel = view.findViewById(R.id.pauseSensor);
-        pauseAccel.setOnClickListener(new View.OnClickListener()
+        loggingButton = view.findViewById(R.id.pauseSensor);
+        loggingButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -41,5 +42,10 @@ public class DataRecorderFragment extends Fragment
     public void setOnCollectionToggleListener(OnCollectionToggle toggle)
     {
         this.onCollectionToggleListener = toggle;
+    }
+
+    public void setButtonTitle(String title)
+    {
+        loggingButton.setText(title);
     }
 }

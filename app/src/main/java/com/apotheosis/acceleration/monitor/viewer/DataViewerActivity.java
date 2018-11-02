@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -15,6 +17,7 @@ import com.apotheosis.acceleration.util.LoadGraph;
 import com.apotheosis.acceleration.util.TimeXYZDataPackage;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 public class DataViewerActivity extends AppCompatActivity
 {
@@ -62,6 +65,15 @@ public class DataViewerActivity extends AppCompatActivity
 						Intent i;
 						dialog.dismiss();
 
+						if(Build.VERSION.SDK_INT>=24){
+							try{
+								Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+								m.invoke(null);
+							}catch(Exception e){
+								e.printStackTrace();
+							}
+						}
+
 						if (which == 0)
 						{
 							i = new Intent(DataViewerActivity.this, DataInfoPageActivity.class);
@@ -73,7 +85,7 @@ public class DataViewerActivity extends AppCompatActivity
 							i = new Intent(Intent.ACTION_SEND);
 							i.setType("text/xml");
 							i.putExtra(Intent.EXTRA_SUBJECT, "Sending " +
-									dp.getTitle() + ".csv" + "as attachment");
+									dp.getTitle() + ".csv" + " as attachment");
 							i.putExtra(Intent.EXTRA_TEXT, dp.getTitle() + ".csv " + "is attached.");
 							File f = new File(FileUtilities.path + dp.getTitle() + ".csv");
 							i.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));

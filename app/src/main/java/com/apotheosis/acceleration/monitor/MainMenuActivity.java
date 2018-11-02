@@ -227,7 +227,7 @@ public class MainMenuActivity extends AppCompatActivity
 	{
 		collector.setFileName(name);
 		collector.start();
-		pauseAccel.setText("Finish");
+		((DataRecorderFragment) currentFragment).setButtonTitle("Finish");
 
 		if(getSupportActionBar() != null)
 			getSupportActionBar().setTitle("Data Collection In Progress");
@@ -256,7 +256,7 @@ public class MainMenuActivity extends AppCompatActivity
 		{
 			collector.stop();
 			collector = null;
-			pauseAccel.setText("Start");
+			((DataRecorderFragment) currentFragment).setButtonTitle("Start");
 
 			if(getSupportActionBar() != null)
 				getSupportActionBar().setTitle("Data Collection Not Running");
